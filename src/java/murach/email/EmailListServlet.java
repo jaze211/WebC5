@@ -17,6 +17,12 @@ public class EmailListServlet extends HttpServlet {
         
         // get current action
         String action = request.getParameter("action");
+        
+        // print action value to console AND log file
+        System.out.println("EmailListServlet action: " + action);
+        log("action=" + action);
+        
+        // set default action
         if (action == null) {
             action = "join";  // default action
         }
@@ -52,5 +58,12 @@ public class EmailListServlet extends HttpServlet {
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
+        doPost(request, response);
     }
 }
