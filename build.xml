@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="WebC5" default="dist" basedir=".">
-    <!-- Định nghĩa các thư mục -->
-    <property name="src.dir" value="src/java"/>
+
+    <!-- Đường dẫn JDK + servlet-api -->
+    <property name="src.dir" value="src"/>
     <property name="web.dir" value="web"/>
     <property name="build.dir" value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
-    <property name="lib.dir" value="lib"/>
     <property name="dist.dir" value="dist"/>
-    <property name="war.file" value="${dist.dir}/WebC5.war"/>
+    <property name="war.name" value="WebC5.war"/>
+    <property name="lib.dir" value="lib"/>
 
-    <!-- Classpath cho compile -->
-    <path id="compile.classpath">
+    <!-- Classpath -->
+    <path id="classpath">
         <fileset dir="${lib.dir}">
-            <include name="*.jar"/>
+            <include name="**/*.jar"/>
         </fileset>
     </path>
 
@@ -22,20 +23,20 @@
         <delete dir="${dist.dir}"/>
     </target>
 
-    <!-- Compile -->
+    <!-- Compile Java -->
     <target name="compile">
         <mkdir dir="${classes.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
-            <classpath refid="compile.classpath"/>
-        </javac>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" classpathref="classpath"/>
     </target>
 
-    <!-- Build WAR -->
+    <!-- Tạo WAR -->
     <target name="dist" depends="compile">
         <mkdir dir="${dist.dir}"/>
-        <war destfile="${war.file}" webxml="${web.dir}/WEB-INF/web.xml">
+        <war destfile="${dist.dir}/${war.name}" webxml="${web.dir}/WEB-INF/web.xml">
             <fileset dir="${web.dir}"/>
+            <lib dir="${lib.dir}"/>
             <classes dir="${classes.dir}"/>
         </war>
     </target>
+
 </project>
