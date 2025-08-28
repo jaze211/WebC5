@@ -1,22 +1,28 @@
-<project name="ch05_ex1_email" default="dist" basedir=".">
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="WebC5" default="dist" basedir=".">
+    <!-- Định nghĩa các thư mục -->
     <property name="src.dir" value="src/java"/>
     <property name="web.dir" value="web"/>
     <property name="build.dir" value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="lib.dir" value="lib"/>
     <property name="dist.dir" value="dist"/>
-    <property name="war.file" value="${dist.dir}/ch05_ex1_email.war"/>
+    <property name="war.file" value="${dist.dir}/WebC5.war"/>
 
+    <!-- Classpath cho compile -->
     <path id="compile.classpath">
-        <fileset dir="lib">
+        <fileset dir="${lib.dir}">
             <include name="*.jar"/>
         </fileset>
     </path>
 
+    <!-- Clean -->
     <target name="clean">
         <delete dir="${build.dir}"/>
         <delete dir="${dist.dir}"/>
     </target>
 
+    <!-- Compile -->
     <target name="compile">
         <mkdir dir="${classes.dir}"/>
         <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
@@ -24,6 +30,7 @@
         </javac>
     </target>
 
+    <!-- Build WAR -->
     <target name="dist" depends="compile">
         <mkdir dir="${dist.dir}"/>
         <war destfile="${war.file}" webxml="${web.dir}/WEB-INF/web.xml">
