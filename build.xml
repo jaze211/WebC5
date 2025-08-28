@@ -1,33 +1,34 @@
 <project name="ch05_ex1_email" default="dist" basedir=".">
-    <description>Custom build script for ch05_ex1_email</description>
-
-    <!-- Các thư mục -->
     <property name="src.dir" value="src/java"/>
-    <property name="conf.dir" value="src/conf"/>
     <property name="web.dir" value="web"/>
     <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="dist.dir" value="dist"/>
-    <property name="war.name" value="ch05_ex1_email.war"/>
+    <property name="war.file" value="${dist.dir}/ch05_ex1_email.war"/>
 
-    <!-- Xóa build cũ -->
+    <path id="compile.classpath">
+        <fileset dir="lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
     <target name="clean">
         <delete dir="${build.dir}"/>
         <delete dir="${dist.dir}"/>
     </target>
 
-    <!-- Compile Java -->
     <target name="compile">
-        <mkdir dir="${build.dir}/classes"/>
-        <javac srcdir="${src.dir}" destdir="${build.dir}/classes" includeantruntime="false"/>
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
+            <classpath refid="compile.classpath"/>
+        </javac>
     </target>
 
-    <!-- Build WAR -->
     <target name="dist" depends="compile">
         <mkdir dir="${dist.dir}"/>
-        <war destfile="${dist.dir}/${war.name}" webxml="${web.dir}/WEB-INF/web.xml">
-            <fileset dir="${web.dir}"/>
-            <classes dir="${build.dir}/classes"/>
-            <metainf dir="${conf.dir}"/>
+        <war destfile="${war.file}" webxml="${web.dir}/WEB-INF/web.xml">
+            <fileset dir="${web}"/>
+            <classes dir="${classes.dir}"/>
         </war>
     </target>
 </project>
