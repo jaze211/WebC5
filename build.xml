@@ -34,7 +34,7 @@
     <target name="dist" depends="compile">
         <mkdir dir="${dist.dir}"/>
         <war destfile="${war.file}" webxml="${web.dir}/WEB-INF/web.xml">
-            <fileset dir="${web}"/>
+            <fileset dir="${web.dir}"/>
             <classes dir="${classes.dir}"/>
         </war>
     </target>
